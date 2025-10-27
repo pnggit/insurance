@@ -33,6 +33,20 @@
             display: none !important;
         }
     </style>
+    <script>
+      (function() {
+        try {
+          const params = new URLSearchParams(window.location.search);
+          const v = params.get('embed');
+          if (v === '1' || v === 'true') {
+            document.documentElement.classList.add('embedded');
+            document.addEventListener('DOMContentLoaded', function() {
+              document.body.classList.add('embedded');
+            });
+          }
+        } catch (e) {}
+      })();
+    </script>
 </head>
 <body>
     <div id="content">
