@@ -1,5 +1,11 @@
 // Chatbot Widget Integration (8888 -> 8889)
 (function() {
+  // Prevent duplicate injection if script is loaded multiple times
+  if (window.__chatbotWidgetInitialized || document.querySelector('.chatbot-widget-toggle') || document.querySelector('.chatbot-widget-container')) {
+    return;
+  }
+  window.__chatbotWidgetInitialized = true;
+
   function log(ctx, msg, err) {
     const prefix = `[ChatbotWidget] ${ctx}:`;
     if (err) console.error(prefix, msg, err);
@@ -30,7 +36,7 @@
     // Iframe to 8889 chatbot app
     const frame = document.createElement('iframe');
     frame.className = 'chatbot-widget-frame';
-    frame.src = 'http://localhost:8889/';
+    frame.src = 'http://localhost:8889/?embed=1';
     frame.title = 'Insurance Chatbot';
     frame.loading = 'eager';
 

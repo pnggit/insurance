@@ -1,6 +1,17 @@
 /**
  * InsuranceChatbot - A chatbot for insurance website with semantic search
  */
+// Detect embed mode via query param to suppress internal toggle when framed
+const EMBED_MODE = (() => {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const v = params.get('embed');
+    return v === '1' || v === 'true';
+  } catch (e) {
+    return false;
+  }
+})();
+
 class InsuranceChatbot {
   constructor() {
     this.vectorStore = new SimpleVectorStore();
@@ -53,16 +64,24 @@ class InsuranceChatbot {
    * Create chatbot UI
    */
   createChatbotUI() {
-    // Create toggle button
+    // Prevent duplicate UI injection if already present
+    if (document.querySelector('.chatbot-container')) { return; }
+
+    // Create toggle button; hide it in embed mode
     const toggleButton = document.createElement('div');
     toggleButton.className = 'chatbot-toggle';
     toggleButton.innerHTML = '<i class="fas fa-comment"></i>';
+    if (EMBED_MODE) {
+      toggleButton.style.display = 'none';
+      // In embed mode, show the chat by default
+      this.isOpen = true;
+    }
     document.body.appendChild(toggleButton);
 
     // Create chatbot container
     const chatbotContainer = document.createElement('div');
     chatbotContainer.className = 'chatbot-container';
-    chatbotContainer.style.display = 'none';
+    chatbotContainer.style.display = EMBED_MODE ? 'flex' : 'none';
     document.body.appendChild(chatbotContainer);
 
     // Create chatbot header
