@@ -75,6 +75,9 @@ class InsuranceChatbot {
       toggleButton.style.display = 'none';
       // In embed mode, show the chat by default
       this.isOpen = true;
+      // Mark body/html as embedded to hide page content and disable scrollbars
+      document.body.classList.add('embedded');
+      document.documentElement.classList.add('embedded');
     }
     document.body.appendChild(toggleButton);
 
@@ -201,7 +204,7 @@ class InsuranceChatbot {
 
       // Prefer server API on 8888 if available to avoid heavy client-side parsing
       try {
-        const apiResponse = await fetch('/api/scrape-content');
+        const apiResponse = await fetch('http://localhost:8888/api/scrape-content', { mode: 'cors' });
         if (apiResponse.ok) {
           const apiData = await apiResponse.json();
           if (Array.isArray(apiData) && apiData.length) {
@@ -275,40 +278,30 @@ class InsuranceChatbot {
    */
   generateResponse(message, searchResults) {
     const messageLower = message.toLowerCase();
-    
-    // Check for greetings
-    if (messageLower.includes('hello') || messageLower.includes('hi') || messageLower === 'hey') {
-      return "Hello! How can I help you with our insurance services today?";
+
+    // Light greeting, then rely on scraped content
+    if (/^(hi|hello|hey)\b/.test(messageLower)) {
+      return "Hello! Ask me anything about our services — I’ll answer using the website content.";
     }
-    
-    // Check for common questions
-    if (messageLower.includes('contact') || messageLower.includes('reach') || messageLower.includes('call')) {
-      return "You can contact us at (555) 123-4567 or email us at info@secureshield.com.";
-    }
-    
-    if (messageLower.includes('quote') || messageLower.includes('price') || messageLower.includes('cost')) {
-      return "To get a personalized quote, please fill out our quote form or contact one of our agents directly.";
-    }
-    
-    if (messageLower.includes('thank')) {
-      return "You're welcome! Is there anything else I can help you with?";
-    }
-    
-    // Use search results if available
+
+    // Use search results if available (answers derived from scraped site)
     if (searchResults && searchResults.length > 0) {
-      // Get the most relevant result
-      const topResult = searchResults[0];
-      
-      // Format response based on the content
-      if (topResult.source === 'Heading') {
-        return `Based on our ${topResult.text.toLowerCase()}, we offer comprehensive coverage tailored to your needs. Would you like more information?`;
-      } else {
-        return topResult.text + " Can I provide more specific information?";
+      const topDoc = searchResults[0].document;
+      const secondary = searchResults[1]?.document;
+
+      let answer = topDoc.text;
+      // Provide a short supporting snippet if available
+      if (secondary && secondary.text && secondary.text !== topDoc.text) {
+        answer += `\n\nRelated info: ${secondary.text}`;
       }
+
+      // Add lightweight citation of source
+      const src = topDoc.source ? ` (source: ${topDoc.source})` : '';
+      return `${answer}${src}`;
     }
-    
-    // Default response
-    return "I'm here to help with any insurance questions. Would you like to know more about our auto, home, health, or life insurance options?";
+
+    // Default when no match is found in the site
+    return "I couldn’t find matching information in the website. Try rephrasing or asking about specific policies, coverage, quotes, or contact information.";
   }
 
   /**
@@ -346,12 +339,16 @@ class InsuranceChatbot {
     // Update messages
     messagesContainer.innerHTML = '';
     
-    // Add messages
+    // Add messages with animation for visibility
     this.messages.forEach(message => {
       const messageElement = document.createElement('div');
       messageElement.className = `chatbot-message ${message.sender}-message`;
       messageElement.textContent = message.text;
       messagesContainer.appendChild(messageElement);
+      // Ensure message is visible by applying animation class
+      setTimeout(() => {
+        messageElement.classList.add('animated');
+      }, 10);
     });
     
     // Show loading indicator if needed
@@ -360,6 +357,9 @@ class InsuranceChatbot {
       loadingElement.className = 'chatbot-message bot-message';
       loadingElement.innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div>';
       messagesContainer.appendChild(loadingElement);
+      setTimeout(() => {
+        loadingElement.classList.add('animated');
+      }, 10);
     }
   }
 

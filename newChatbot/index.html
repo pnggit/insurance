@@ -24,6 +24,14 @@
         h1, h2 {
             color: #0056b3;
         }
+        /* Embed-only adjustments: hide background content and disable scrollbars */
+        body.embedded, html.embedded {
+            overflow: hidden;
+            background: transparent;
+        }
+        body.embedded #content {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -57,235 +65,10 @@
         </section>
     </div>
 
-    <!-- Chatbot UI will be injected here -->
-    <div class="chatbot-toggle">
-        <i class="fas fa-comments"></i>
-    </div>
-    
-    <div class="chatbot-container" style="display: none;">
-        <div class="chatbot-header">
-            <h3>Insurance Assistant</h3>
-            <button class="chatbot-close">&times;</button>
-        </div>
-        <div class="chatbot-messages"></div>
-        <div class="chatbot-input-area">
-            <input type="text" placeholder="Type your question here...">
-            <button class="chatbot-send">
-                <i class="fas fa-paper-plane"></i>
-            </button>
-        </div>
-    </div>
+    <!-- Chatbot UI is injected by chatbot-main.js -->
 
-    <script>
-        // Simple Vector Store for semantic search
-        class SimpleVectorStore {
-            constructor() {
-                this.documents = [];
-            }
-            
-            addDocument(id, content) {
-                this.documents.push({ id, content });
-            }
-            
-            search(query, topK = 3) {
-                // Simple keyword matching for demo purposes
-                const keywords = query.toLowerCase().split(/\s+/);
-                
-                const results = this.documents.map(doc => {
-                    const content = doc.content.toLowerCase();
-                    let score = 0;
-                    
-                    keywords.forEach(keyword => {
-                        if (content.includes(keyword)) {
-                            score += 1;
-                        }
-                    });
-                    
-                    return { ...doc, score };
-                });
-                
-                return results
-                    .filter(item => item.score > 0)
-                    .sort((a, b) => b.score - a.score)
-                    .slice(0, topK);
-            }
-        }
-        
-        // Detect embed mode via query parameter to suppress internal toggle when framed
-        const EMBED_MODE = (() => {
-            try {
-                const params = new URLSearchParams(window.location.search);
-                const v = params.get('embed');
-                return v === '1' || v === 'true';
-            } catch (e) {
-                return false;
-            }
-        })();
-        
-        // Insurance Chatbot
-        class InsuranceChatbot {
-            constructor() {
-                this.vectorStore = new SimpleVectorStore();
-                this.isOpen = false;
-                
-                // Initialize content
-                this.initializeContent();
-                
-                // Set up UI and event listeners
-                this.setupUI();
-                this.setupEventListeners();
-                
-                // Add welcome message
-                setTimeout(() => {
-                    this.addMessage("Hello! I'm your insurance assistant. How can I help you today?", 'bot');
-                }, 500);
-            }
-            
-            initializeContent() {
-                // Add website content to vector store
-                this.vectorStore.addDocument('auto', 'Auto insurance provides comprehensive coverage for your vehicle, including collision, liability, and personal injury protection.');
-                this.vectorStore.addDocument('home', 'Home insurance protects your home and belongings, covering damage from fire, theft, natural disasters, and more.');
-                this.vectorStore.addDocument('life', 'Life insurance provides financial security for your loved ones in the event of your passing, with options for term and whole life coverage.');
-                this.vectorStore.addDocument('health', 'Health insurance covers medical expenses, prescription drugs, and preventive care to keep you and your family healthy.');
-                this.vectorStore.addDocument('business', 'Business insurance includes liability, property, and workers\' compensation coverage to protect your business.');
-                this.vectorStore.addDocument('types', 'We offer auto insurance, home insurance, life insurance, health insurance, and business insurance.');
-            }
-            
-            setupUI() {
-                this.toggleButton = document.querySelector('.chatbot-toggle');
-                this.container = document.querySelector('.chatbot-container');
-                this.messagesArea = document.querySelector('.chatbot-messages');
-                this.closeButton = document.querySelector('.chatbot-close');
-                this.input = document.querySelector('.chatbot-input-area input');
-                this.sendButton = document.querySelector('.chatbot-send');
-                
-                // Apply embed mode: hide internal toggle, open container
-                if (EMBED_MODE) {
-                    if (this.toggleButton) {
-                        this.toggleButton.style.display = 'none';
-                    }
-                    this.isOpen = true;
-                    if (this.container) {
-                        this.container.style.display = 'flex';
-                    }
-                }
-            }
-            
-            setupEventListeners() {
-                // Toggle chatbot visibility (only when toggle exists in non-embed mode)
-                if (this.toggleButton && !EMBED_MODE) {
-                    this.toggleButton.addEventListener('click', () => this.toggleChatbot());
-                }
-                this.closeButton.addEventListener('click', () => this.toggleChatbot(false));
-                
-                // Send message on button click
-                this.sendButton.addEventListener('click', () => this.handleUserInput());
-                
-                // Send message on Enter key
-                this.input.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        this.handleUserInput();
-                    }
-                });
-            }
-            
-            toggleChatbot(show = null) {
-                this.isOpen = show !== null ? show : !this.isOpen;
-                this.container.style.display = this.isOpen ? 'flex' : 'none';
-                
-                if (this.isOpen) {
-                    this.input.focus();
-                }
-            }
-            
-            handleUserInput() {
-                const message = this.input.value.trim();
-                
-                if (message) {
-                    // Add user message to chat
-                    this.addMessage(message, 'user');
-                    
-                    // Clear input
-                    this.input.value = '';
-                    
-                    // Show typing indicator
-                    this.showTypingIndicator();
-                    
-                    // Process message and respond after a delay
-                    setTimeout(() => {
-                        this.respondToMessage(message);
-                        this.hideTypingIndicator();
-                    }, 1000);
-                }
-            }
-            
-            showTypingIndicator() {
-                const typingIndicator = document.createElement('div');
-                typingIndicator.className = 'typing-indicator';
-                typingIndicator.innerHTML = '<span></span><span></span><span></span>';
-                typingIndicator.id = 'typing-indicator';
-                this.messagesArea.appendChild(typingIndicator);
-                this.messagesArea.scrollTop = this.messagesArea.scrollHeight;
-            }
-            
-            hideTypingIndicator() {
-                const typingIndicator = document.getElementById('typing-indicator');
-                if (typingIndicator) {
-                    typingIndicator.remove();
-                }
-            }
-            
-            respondToMessage(message) {
-                // Search for relevant content
-                const results = this.vectorStore.search(message);
-                
-                let response;
-                
-                // Generate response based on search results and keywords
-                if (message.toLowerCase().includes('hello') || message.toLowerCase().includes('hi')) {
-                    response = "Hello! How can I help you with insurance today?";
-                } else if (message.toLowerCase().includes('types') || message.toLowerCase().includes('offer') || message.toLowerCase().includes('insurance types')) {
-                    response = "We offer several types of insurance: auto, home, life, health, and business insurance. Which one would you like to know more about?";
-                } else if (results.length > 0) {
-                    // Use the most relevant search result
-                    response = results[0].content;
-                    
-                    // Add a follow-up question
-                    response += " Would you like to know more about this or any other insurance products?";
-                } else {
-                    response = "I'm not sure I understand. Could you please ask about specific insurance types like auto, home, life, health, or business insurance?";
-                }
-                
-                // Add bot response to chat
-                this.addMessage(response, 'bot');
-            }
-            
-            addMessage(content, sender) {
-                const messageElement = document.createElement('div');
-                messageElement.className = `chatbot-message ${sender}-message`;
-                
-                const now = new Date();
-                const timeString = `${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
-                
-                messageElement.innerHTML = `
-                    <div class="message-content">${content}</div>
-                    <div class="message-time">${timeString}</div>
-                `;
-                
-                this.messagesArea.appendChild(messageElement);
-                
-                // Add animation class after a small delay
-                setTimeout(() => {
-                    messageElement.classList.add('animated');
-                    this.messagesArea.scrollTop = this.messagesArea.scrollHeight;
-                }, 10);
-            }
-        }
-        
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            new InsuranceChatbot();
-        });
-    </script>
+    <script src="vectorStore.js"></script>
+    <script src="scraper.js"></script>
+    <script src="chatbot-main.js"></script>
 </body>
 </html>

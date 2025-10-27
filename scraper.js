@@ -17,6 +17,24 @@ async function scrapeWebsite(url) {
     
     // Extract text from different sections with their sources
     const textChunks = [];
+
+    // Extract page title
+    const titleText = $('title').text().trim();
+    if (titleText) {
+      textChunks.push({
+        text: cleanText(titleText),
+        source: 'Title'
+      });
+    }
+
+    // Extract meta description
+    const metaDesc = $('meta[name="description"]').attr('content');
+    if (metaDesc) {
+      textChunks.push({
+        text: cleanText(metaDesc),
+        source: 'Meta Description'
+      });
+    }
     
     // Extract header content
     const headerText = $('header').text().trim();
@@ -35,6 +53,17 @@ async function scrapeWebsite(url) {
         source: 'Navigation'
       });
     }
+
+    // Extract headings
+    $('h1, h2, h3').each((i, el) => {
+      const headingText = $(el).text().trim();
+      if (headingText) {
+        textChunks.push({
+          text: cleanText(headingText),
+          source: $(el).prop('tagName')
+        });
+      }
+    });
     
     // Extract main content sections
     $('section, article, .container, main, div.row').each((i, element) => {
@@ -57,6 +86,29 @@ async function scrapeWebsite(url) {
         textChunks.push({
           text: cleanText(paragraphText),
           source: 'Paragraph'
+        });
+      }
+    });
+
+    // Extract list items
+    $('ul li, ol li').each((i, element) => {
+      const liText = $(element).text().trim();
+      if (liText && liText.length > 10) {
+        textChunks.push({
+          text: cleanText(liText),
+          source: 'List Item'
+        });
+      }
+    });
+
+    // Extract meaningful link texts
+    $('a').each((i, element) => {
+      const linkText = $(element).text().trim();
+      const href = $(element).attr('href') || '';
+      if (linkText && linkText.length > 10) {
+        textChunks.push({
+          text: cleanText(linkText + (href ? ` (link: ${href})` : '')),
+          source: 'Link'
         });
       }
     });
