@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SecureShield Insurance - Your Protection Partner</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="public/chatbot-widget.css">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <!-- Chatbot widget scripts are included at the bottom of the page -->
 </head>
 <body>
     <header>
@@ -20,6 +22,7 @@
                     <li><a href="#home">Home</a></li>
                     <li><a href="#services">Services</a></li>
                     <li><a href="#about">About Us</a></li>
+                    <li><a href="#agents">Our Agents</a></li>
                     <li><a href="#contact" class="btn-primary">Get a Quote</a></li>
                 </ul>
             </nav>
@@ -41,32 +44,36 @@
             <h2 class="section-title">Our Insurance Services</h2>
             <div class="services-grid">
                 <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-car"></i>
+                    <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Auto Insurance - Car on road" class="service-image">
+                    <div class="service-content">
+                        <h3>Auto Insurance</h3>
+                        <p>Comprehensive coverage for your vehicles with competitive rates and exceptional service.</p>
+                        <a href="#contact" class="btn btn-secondary">Get a Quote</a>
                     </div>
-                    <h3>Auto Insurance</h3>
-                    <p>Comprehensive coverage for your vehicles with competitive rates and excellent service.</p>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-home"></i>
+                    <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Home Insurance - Modern house" class="service-image">
+                    <div class="service-content">
+                        <h3>Home Insurance</h3>
+                        <p>Protect your home and belongings with our customizable homeowner's insurance policies.</p>
+                        <a href="#contact" class="btn btn-secondary">Get a Quote</a>
                     </div>
-                    <h3>Home Insurance</h3>
-                    <p>Protect your home and belongings with our customizable home insurance policies.</p>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-heartbeat"></i>
+                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Health Insurance - Medical stethoscope" class="service-image">
+                    <div class="service-content">
+                        <h3>Health Insurance</h3>
+                        <p>Quality healthcare coverage for individuals and families with access to top medical providers.</p>
+                        <a href="#contact" class="btn btn-secondary">Get a Quote</a>
                     </div>
-                    <h3>Health Insurance</h3>
-                    <p>Quality healthcare coverage options for individuals and families at affordable prices.</p>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-user-shield"></i>
+                    <img src="https://images.unsplash.com/photo-1516575334481-f85287c2c82d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Life Insurance - Family holding hands" class="service-image">
+                    <div class="service-content">
+                        <h3>Life Insurance</h3>
+                        <p>Financial security for your loved ones with flexible life insurance solutions.</p>
+                        <a href="#contact" class="btn btn-secondary">Get a Quote</a>
                     </div>
-                    <h3>Life Insurance</h3>
-                    <p>Secure your family's financial future with our flexible life insurance plans.</p>
                 </div>
             </div>
         </div>
@@ -75,9 +82,14 @@
     <section id="about" class="about">
         <div class="container">
             <div class="about-content">
-                <h2 class="section-title">About SecureShield Insurance</h2>
-                <p>At SecureShield Insurance, we've been helping clients protect what matters most since 2005. Our team of experienced insurance professionals is dedicated to finding the right coverage for your unique needs.</p>
-                <p>We believe in building lasting relationships with our clients through trust, transparency, and exceptional service. Our goal is to provide peace of mind knowing you're properly protected.</p>
+                <div class="about-image-container">
+                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Insurance professionals in a meeting" class="about-image">
+                </div>
+                <div class="about-text">
+                    <h2 class="section-title">About SecureShield Insurance</h2>
+                    <p>At SecureShield Insurance, we've been helping clients protect what matters most since 2005. Our team of experienced insurance professionals is dedicated to finding the right coverage for your unique needs.</p>
+                    <p>We believe in building lasting relationships with our clients through trust, transparency, and exceptional service. Our goal is to provide peace of mind knowing you're properly protected.</p>
+                </div>
                 <div class="about-features">
                     <div class="feature">
                         <i class="fas fa-check-circle"></i>
@@ -94,6 +106,57 @@
                     <div class="feature">
                         <i class="fas fa-check-circle"></i>
                         <span>24/7 Support</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="agents" class="agents">
+        <div class="container">
+            <h2 class="section-title">Meet Your Agents</h2>
+            <p class="section-description">Our experienced team of insurance professionals is here to help you find the perfect coverage.</p>
+            
+            <div class="agents-grid">
+                <div class="agent-card">
+                    <div class="agent-image">
+                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah Johnson">
+                    </div>
+                    <h3>Sarah Johnson</h3>
+                    <p class="agent-title">Senior Insurance Advisor</p>
+                    <p class="agent-description">Specializing in home and auto insurance with over 10 years of experience helping families find the right coverage.</p>
+                    <div class="agent-contact">
+                        <a href="mailto:sarah@secureshield.com"><i class="fas fa-envelope"></i></a>
+                        <a href="tel:5551234567"><i class="fas fa-phone"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="agent-card">
+                    <div class="agent-image">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael Chen">
+                    </div>
+                    <h3>Michael Chen</h3>
+                    <p class="agent-title">Life Insurance Specialist</p>
+                    <p class="agent-description">Expert in life insurance and retirement planning with a personalized approach to securing your family's future.</p>
+                    <div class="agent-contact">
+                        <a href="mailto:michael@secureshield.com"><i class="fas fa-envelope"></i></a>
+                        <a href="tel:5551234568"><i class="fas fa-phone"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="agent-card">
+                    <div class="agent-image">
+                        <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Jessica Martinez">
+                    </div>
+                    <h3>Jessica Martinez</h3>
+                    <p class="agent-title">Health Insurance Advisor</p>
+                    <p class="agent-description">Dedicated to finding affordable health insurance solutions for individuals and families with comprehensive coverage.</p>
+                    <div class="agent-contact">
+                        <a href="mailto:jessica@secureshield.com"><i class="fas fa-envelope"></i></a>
+                        <a href="tel:5551234569"><i class="fas fa-phone"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
             </div>
@@ -229,5 +292,8 @@
     </div>
 
     <script src="script.js"></script>
+    
+    <!-- Chatbot widget -->
+    <script src="public/chatbot-widget.js"></script>
 </body>
 </html>

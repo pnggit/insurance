@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureShield Insurance - Get a Quote</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="quote-form.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>SecureShield Insurance</h1>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#" class="active">Get a Quote</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Get Your Personalized Insurance Quote</h2>
+                <p>Complete the form below to receive a customized quote tailored to your needs</p>
+            </div>
+        </section>
+
+        <section class="quote-form-section">
+            <div class="container">
+                <div class="form-container">
+                    <form id="insurance-quote-form">
+                        <!-- Insurance Type Selection -->
+                        <div class="form-group">
+                            <h3>Select Insurance Type</h3>
+                            <div class="insurance-type-selector">
+                                <div class="insurance-type-option" data-type="auto">
+                                    <i class="fas fa-car"></i>
+                                    <span>Auto</span>
+                                </div>
+                                <div class="insurance-type-option" data-type="home">
+                                    <i class="fas fa-home"></i>
+                                    <span>Home</span>
+                                </div>
+                                <div class="insurance-type-option" data-type="health">
+                                    <i class="fas fa-heartbeat"></i>
+                                    <span>Health</span>
+                                </div>
+                                <div class="insurance-type-option" data-type="life">
+                                    <i class="fas fa-user-shield"></i>
+                                    <span>Life</span>
+                                </div>
+                            </div>
+                            <input type="hidden" id="selected-insurance-type" name="insuranceType" required>
+                        </div>
+
+                        <!-- Dynamic Form Fields - Auto Insurance -->
+                        <div class="dynamic-fields" id="auto-fields">
+                            <h3>Auto Insurance Details</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="auto-year">Vehicle Year</label>
+                                    <input type="number" id="auto-year" name="vehicleYear" min="1900" max="2030">
+                                </div>
+                                <div class="form-group">
+                                    <label for="auto-make">Vehicle Make</label>
+                                    <input type="text" id="auto-make" name="vehicleMake">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="auto-model">Vehicle Model</label>
+                                    <input type="text" id="auto-model" name="vehicleModel">
+                                </div>
+                                <div class="form-group">
+                                    <label for="auto-mileage">Annual Mileage</label>
+                                    <input type="number" id="auto-mileage" name="annualMileage" min="0">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Coverage Options</label>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="auto-liability" name="coverage[]" value="liability">
+                                        <label for="auto-liability">Liability</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="auto-collision" name="coverage[]" value="collision">
+                                        <label for="auto-collision">Collision</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="auto-comprehensive" name="coverage[]" value="comprehensive">
+                                        <label for="auto-comprehensive">Comprehensive</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="auto-uninsured" name="coverage[]" value="uninsured">
+                                        <label for="auto-uninsured">Uninsured Motorist</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Form Fields - Home Insurance -->
+                        <div class="dynamic-fields" id="home-fields">
+                            <h3>Home Insurance Details</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="home-type">Property Type</label>
+                                    <select id="home-type" name="propertyType">
+                                        <option value="">Select...</option>
+                                        <option value="single-family">Single Family Home</option>
+                                        <option value="condo">Condominium</option>
+                                        <option value="townhouse">Townhouse</option>
+                                        <option value="apartment">Apartment</option>
+                                        <option value="mobile">Mobile Home</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="home-year">Year Built</label>
+                                    <input type="number" id="home-year" name="yearBuilt" min="1800" max="2030">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="home-sqft">Square Footage</label>
+                                    <input type="number" id="home-sqft" name="squareFootage" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="home-value">Estimated Value</label>
+                                    <input type="number" id="home-value" name="propertyValue" min="0">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Coverage Options</label>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="home-dwelling" name="coverage[]" value="dwelling">
+                                        <label for="home-dwelling">Dwelling Coverage</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="home-personal" name="coverage[]" value="personal">
+                                        <label for="home-personal">Personal Property</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="home-liability" name="coverage[]" value="liability">
+                                        <label for="home-liability">Liability Protection</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="home-flood" name="coverage[]" value="flood">
+                                        <label for="home-flood">Flood Insurance</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Form Fields - Health Insurance -->
+                        <div class="dynamic-fields" id="health-fields">
+                            <h3>Health Insurance Details</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="health-plan">Plan Type</label>
+                                    <select id="health-plan" name="healthPlanType">
+                                        <option value="">Select...</option>
+                                        <option value="hmo">HMO</option>
+                                        <option value="ppo">PPO</option>
+                                        <option value="epo">EPO</option>
+                                        <option value="pos">POS</option>
+                                        <option value="hdhp">HDHP</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="health-coverage">Coverage For</label>
+                                    <select id="health-coverage" name="coverageFor">
+                                        <option value="">Select...</option>
+                                        <option value="individual">Individual</option>
+                                        <option value="couple">Couple</option>
+                                        <option value="family">Family</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Coverage Options</label>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="health-preventive" name="coverage[]" value="preventive">
+                                        <label for="health-preventive">Preventive Care</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="health-prescription" name="coverage[]" value="prescription">
+                                        <label for="health-prescription">Prescription Coverage</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="health-dental" name="coverage[]" value="dental">
+                                        <label for="health-dental">Dental Coverage</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="health-vision" name="coverage[]" value="vision">
+                                        <label for="health-vision">Vision Coverage</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Form Fields - Life Insurance -->
+                        <div class="dynamic-fields" id="life-fields">
+                            <h3>Life Insurance Details</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="life-type">Policy Type</label>
+                                    <select id="life-type" name="lifeInsuranceType">
+                                        <option value="">Select...</option>
+                                        <option value="term">Term Life</option>
+                                        <option value="whole">Whole Life</option>
+                                        <option value="universal">Universal Life</option>
+                                        <option value="variable">Variable Life</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="life-coverage">Coverage Amount</label>
+                                    <select id="life-coverage" name="lifeCoverageAmount">
+                                        <option value="">Select...</option>
+                                        <option value="100000">$100,000</option>
+                                        <option value="250000">$250,000</option>
+                                        <option value="500000">$500,000</option>
+                                        <option value="1000000">$1,000,000</option>
+                                        <option value="2000000">$2,000,000+</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="life-term">Term Length (if applicable)</label>
+                                <select id="life-term" name="lifeTerm">
+                                    <option value="">Select...</option>
+                                    <option value="10">10 Years</option>
+                                    <option value="20">20 Years</option>
+                                    <option value="30">30 Years</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Additional Options</label>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="life-rider" name="coverage[]" value="rider">
+                                        <label for="life-rider">Accidental Death Rider</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="life-disability" name="coverage[]" value="disability">
+                                        <label for="life-disability">Disability Waiver</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="life-conversion" name="coverage[]" value="conversion">
+                                        <label for="life-conversion">Conversion Option</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Personal Information -->
+                        <div class="form-group">
+                            <h3>Personal Information</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="first-name">First Name</label>
+                                    <input type="text" id="first-name" name="firstName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="last-name">Last Name</label>
+                                    <input type="text" id="last-name" name="lastName" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Email Address</label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number</label>
+                                    <input type="tel" id="phone" name="phone" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="zip">ZIP Code</label>
+                                    <input type="text" id="zip" name="zipCode" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dob">Date of Birth</label>
+                                    <input type="date" id="dob" name="dateOfBirth" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="form-group submit-group">
+                            <button type="submit" class="btn btn-primary">Get My Quote</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Meet Your Agents Section -->
+        <section class="agents-section">
+            <div class="container">
+                <h2>Meet Your Insurance Agents</h2>
+                <p>Our experienced team is ready to help you find the perfect coverage</p>
+                
+                <div class="agents-grid">
+                    <!-- Agent 1 -->
+                    <div class="agent-card">
+                        <div class="agent-image">
+                            <img src="464B4829-0E3B-43C9-9C77-FF97E76800D7.png" alt="Sarah Johnson - Insurance Agent">
+                        </div>
+                        <div class="agent-info">
+                            <h3>Sarah Johnson</h3>
+                            <p class="agent-title">Senior Insurance Advisor</p>
+                            <p class="agent-specialties">
+                                <span class="specialty">Auto</span>
+                                <span class="specialty">Home</span>
+                            </p>
+                            <div class="agent-contact">
+                                <a href="tel:+18005551234"><i class="fas fa-phone"></i> (800) 555-1234</a>
+                                <a href="mailto:sarah@secureshield.example.com"><i class="fas fa-envelope"></i> Email</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Agent 2 -->
+                    <div class="agent-card">
+                        <div class="agent-image">
+                            <img src="464B4829-0E3B-43C9-9C77-FF97E76800D7.png" alt="Michael Rodriguez - Insurance Agent">
+                        </div>
+                        <div class="agent-info">
+                            <h3>Michael Rodriguez</h3>
+                            <p class="agent-title">Health Insurance Specialist</p>
+                            <p class="agent-specialties">
+                                <span class="specialty">Health</span>
+                                <span class="specialty">Life</span>
+                            </p>
+                            <div class="agent-contact">
+                                <a href="tel:+18005552345"><i class="fas fa-phone"></i> (800) 555-2345</a>
+                                <a href="mailto:michael@secureshield.example.com"><i class="fas fa-envelope"></i> Email</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Agent 3 -->
+                    <div class="agent-card">
+                        <div class="agent-image">
+                            <img src="464B4829-0E3B-43C9-9C77-FF97E76800D7.png" alt="Jennifer Lee - Insurance Agent">
+                        </div>
+                        <div class="agent-info">
+                            <h3>Jennifer Lee</h3>
+                            <p class="agent-title">Commercial Insurance Expert</p>
+                            <p class="agent-specialties">
+                                <span class="specialty">Business</span>
+                                <span class="specialty">Liability</span>
+                            </p>
+                            <div class="agent-contact">
+                                <a href="tel:+18005553456"><i class="fas fa-phone"></i> (800) 555-3456</a>
+                                <a href="mailto:jennifer@secureshield.example.com"><i class="fas fa-envelope"></i> Email</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Agent 4 -->
+                    <div class="agent-card">
+                        <div class="agent-image">
+                            <img src="464B4829-0E3B-43C9-9C77-FF97E76800D7.png" alt="David Wilson - Insurance Agent">
+                        </div>
+                        <div class="agent-info">
+                            <h3>David Wilson</h3>
+                            <p class="agent-title">Life Insurance Advisor</p>
+                            <p class="agent-specialties">
+                                <span class="specialty">Life</span>
+                                <span class="specialty">Retirement</span>
+                            </p>
+                            <div class="agent-contact">
+                                <a href="tel:+18005554567"><i class="fas fa-phone"></i> (800) 555-4567</a>
+                                <a href="mailto:david@secureshield.example.com"><i class="fas fa-envelope"></i> Email</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 SecureShield Insurance. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Success Modal -->
+    <div class="modal" id="success-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-icon success">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Quote Request Submitted!</h3>
+            <p>Thank you for your submission. One of our agents will contact you shortly with your personalized quote.</p>
+            <button class="btn btn-primary modal-close">Close</button>
+        </div>
+    </div>
+
+    <script src="quote-form.js"></script>
+</body>
+</html>

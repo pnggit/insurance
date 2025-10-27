@@ -58,7 +58,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     showModal(successModal);
                     inquiryForm.reset();
                 })
-                .catch(() => {
+                .catch((errorMessage) => {
+                    // Display error message in the modal if available
+                    const errorText = document.querySelector('#error-message .modal-content p');
+                    if (errorText && typeof errorMessage === 'string') {
+                        errorText.textContent = errorMessage;
+                    }
                     showModal(errorModal);
                 });
         });
@@ -79,20 +84,36 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Function to simulate form submission (replace with actual EmailJS implementation)
+    // Function to submit form data to our Node.js backend
     function simulateFormSubmission(form) {
         return new Promise((resolve, reject) => {
-            // Simulate API call delay
-            setTimeout(() => {
-                // 90% success rate for demo purposes
-                const isSuccess = Math.random() < 0.9;
-                
-                if (isSuccess) {
-                    resolve();
+            const formData = {
+                name: document.getElementById('name').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                insuranceType: document.getElementById('insurance-type').value,
+                message: document.getElementById('message') ? document.getElementById('message').value.trim() : ''
+            };
+            
+            fetch('/api/submit-form', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    resolve(data);
                 } else {
-                    reject();
+                    reject(data.message || 'Form submission failed');
                 }
-            }, 1500);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                reject('An error occurred. Please try again later.');
+            });
         });
     }
 

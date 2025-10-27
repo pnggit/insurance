@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# Environment secrets
+.env
+
+# Data files
+data/*.csv
+
+# OS/Editor junk
+.DS_Store
+*.log

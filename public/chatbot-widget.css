@@ -1,0 +1,102 @@
+/* Chatbot Widget Styles for 8888 -> 8889 integration */
+:root {
+  --widget-primary: #2563eb;
+  --widget-bg: #ffffff;
+  --widget-text: #1f2937;
+  --widget-shadow: rgba(0, 0, 0, 0.2);
+}
+
+.chatbot-widget-toggle {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 9999;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--widget-primary);
+  color: #fff;
+  border: none;
+  box-shadow: 0 8px 24px var(--widget-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.chatbot-widget-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px var(--widget-shadow);
+}
+
+.chatbot-widget-toggle i {
+  font-size: 20px;
+}
+
+.chatbot-widget-container {
+  position: fixed;
+  right: 24px;
+  bottom: 88px; /* Above the toggle button */
+  width: 360px;
+  height: 520px;
+  max-height: calc(100vh - 140px);
+  background: var(--widget-bg);
+  color: var(--widget-text);
+  border-radius: 16px;
+  box-shadow: 0 16px 48px var(--widget-shadow);
+  z-index: 9999;
+  display: none; /* toggled via JS */
+  overflow: hidden;
+}
+
+.chatbot-widget-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.chatbot-widget-header-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.chatbot-widget-close {
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+.chatbot-widget-frame {
+  width: 100%;
+  height: calc(100% - 44px); /* subtract header */
+  border: 0;
+  background: #fff;
+}
+
+.chatbot-widget-status {
+  position: absolute;
+  bottom: 8px;
+  left: 12px;
+  font-size: 11px;
+  color: #6b7280;
+}
+
+@media (max-width: 420px) {
+  .chatbot-widget-container {
+    right: 12px;
+    bottom: 76px;
+    width: 88vw;
+    height: 60vh;
+  }
+  .chatbot-widget-toggle {
+    right: 12px;
+    bottom: 12px;
+  }
+}
