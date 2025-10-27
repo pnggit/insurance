@@ -90,8 +90,10 @@ class InsuranceChatbot {
   // Format streaming text: paragraphs and remove inline source markers like [#n]
   formatTextWithParagraphsAndAnchors(text, citations) {
     const safe = this.escapeHtml(text || '');
-    // Remove inline source references entirely
-    const noRefs = safe.replace(/\s*\[#\d+\]\s*/g, ' ');
+    // Remove bracketed citation lists like [#1, #2, #4] and single markers like [#1]
+    const noRefs = safe
+      .replace(/\s*\[[^\]]*#\d+[^\]]*\]\s*/g, ' ')
+      .replace(/\s*\[#\d+\]\s*/g, ' ');
     // Convert newlines to paragraph/line breaks for readability
     let html = noRefs.replace(/\n\n+/g, '</p><p>').replace(/\n/g, '<br/>');
     html = `<p>${html}</p>`;
