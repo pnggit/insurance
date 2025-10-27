@@ -111,6 +111,17 @@
             }
         }
         
+        // Detect embed mode via query parameter to suppress internal toggle when framed
+        const EMBED_MODE = (() => {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const v = params.get('embed');
+                return v === '1' || v === 'true';
+            } catch (e) {
+                return false;
+            }
+        })();
+        
         // Insurance Chatbot
         class InsuranceChatbot {
             constructor() {
@@ -147,11 +158,24 @@
                 this.closeButton = document.querySelector('.chatbot-close');
                 this.input = document.querySelector('.chatbot-input-area input');
                 this.sendButton = document.querySelector('.chatbot-send');
+                
+                // Apply embed mode: hide internal toggle, open container
+                if (EMBED_MODE) {
+                    if (this.toggleButton) {
+                        this.toggleButton.style.display = 'none';
+                    }
+                    this.isOpen = true;
+                    if (this.container) {
+                        this.container.style.display = 'flex';
+                    }
+                }
             }
             
             setupEventListeners() {
-                // Toggle chatbot visibility
-                this.toggleButton.addEventListener('click', () => this.toggleChatbot());
+                // Toggle chatbot visibility (only when toggle exists in non-embed mode)
+                if (this.toggleButton && !EMBED_MODE) {
+                    this.toggleButton.addEventListener('click', () => this.toggleChatbot());
+                }
                 this.closeButton.addEventListener('click', () => this.toggleChatbot(false));
                 
                 // Send message on button click
@@ -258,9 +282,9 @@
             }
         }
         
-        // Initialize chatbot when DOM is loaded
+        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            const chatbot = new InsuranceChatbot();
+            new InsuranceChatbot();
         });
     </script>
 </body>
